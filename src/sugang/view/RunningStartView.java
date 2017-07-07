@@ -1,0 +1,21 @@
+package sugang.view;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+import sugang.service.LoginController;
+import sugang.service.SugangRegistrationController;
+
+public class RunningStartView {
+	public static void main(String[] args) {
+		System.out.println("***** 로그인 *****");
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		LoginController.init(in);
+		System.out.println("\n***** 모든 재능 기부자 검색 *****");
+		SugangRegistrationController.getAllLectures();
+		System.out.println("\n***** 학번 201314135로 수강신청 내역 검색 *****");
+		String temp = "201314135";
+		SugangRegistrationController.getRegistration(temp);
+	}
+
+}
