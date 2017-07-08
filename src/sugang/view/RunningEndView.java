@@ -2,20 +2,19 @@ package sugang.view;
 
 import java.util.ArrayList;
 
+import sugang.model.dto.LectureDTO;
 import sugang.model.dto.StudentDTO;
 
 public class RunningEndView {
 	// 모든 강의 출력
-	public static void lectureListView(ArrayList allLecturelist) {
-		// ? 데이터 수가 몇만건
-		// 하단 코드 적합 부적합 고민
+	public static void lectureListView(ArrayList<LectureDTO> allLecturelist) {
 		int length = allLecturelist.size();
 		if (length != 0) {
 			for (int index = 0; index < length; index++) {
 				System.out.println("검색정보 " + (index + 1) + " - " + allLecturelist.get(index));
 			}
 		} else {
-			System.out.println("검색할 강의 리스트가 없습니다.");
+			System.out.println("검색된 강의 리스트가 없습니다.");
 		}
 	}
 
@@ -42,5 +41,8 @@ public class RunningEndView {
 	public static void showError(String message) {
 		System.out.println(message);
 	}
-
+	
+	public static void showMenu(){
+		
+	}
 }

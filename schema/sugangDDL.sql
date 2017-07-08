@@ -10,6 +10,12 @@ drop table professor cascade constraint;
 -- lecture table
 drop table lecture cascade constraint;
 
+-- registrationlist
+drop view registrationlist cascade constraint;
+
+-- lecturelist
+drop view lecturelist cascade constraint;
+
 -- registration table
 drop table registration cascade constraint;
 drop sequence registration_seq_rnum;
@@ -68,4 +74,19 @@ create table registration (
 	constraint registration_scode_fk foreign key(scode) references student(scode),
 	constraint registration_lcode_fk foreign key(lcode) references lecture(lcode)
 );
+
+-- registrationlist
+create view registrationlist as 
+select lcode, lname, m.mname, p.pname, lday, lstart, lend
+from lecture l, major m, professor p
+where l.mcode = m.mcode and l.pcode = p.pcode;
+
+-- lecturelist
+create view lecturelist as 
+select lcode, lname, m.mname, p.pname, lday, lstart, lend, lcount, lcurrent
+from lecture l, major m, professor p
+where l.mcode = m.mcode and l.pcode = p.pcode;
+
+
+
 
