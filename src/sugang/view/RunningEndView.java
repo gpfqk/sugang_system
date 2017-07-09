@@ -89,7 +89,7 @@ public class RunningEndView {
 			System.out.println("2. 메인으로");
 			System.out.print("번호를 선택하세요 : ");
 		} else if (flag.equals("Registration")) {
-			System.out.println("1. 수강신청하기(미구현)");
+			System.out.println("1. 수강신청하기");
 			System.out.println("2. 강의조회화면으로");
 			System.out.print("번호를 선택하세요 : ");
 		}
