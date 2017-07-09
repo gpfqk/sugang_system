@@ -43,7 +43,6 @@ public class RegistrationDAO {
 	public static boolean addRegistration(String lecCode) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		ArrayList<RegistrationDTO> all = null;
 		String stuCode = SugangMenuController.session.getCode();
 
 		try {
@@ -62,7 +61,66 @@ public class RegistrationDAO {
 		}
 		return false;
 	}
+	
+	public static boolean addNewDayRegistration(String lecCode) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String stuCode = SugangMenuController.session.getCode();
 
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(sql.getProperty("addNewDayRegistration"));
+			pstmt.setString(1, stuCode);
+			pstmt.setString(2, lecCode);
+			int result = pstmt.executeUpdate();
+			if (result == 1) {
+				return true;
+			}
+		} finally {
+			DBUtil.close(con, pstmt);
+		}
+		return false;
+	}
+
+	public static boolean verifyCount(String lecCode) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(sql.getProperty("verifyCount"));
+			pstmt.setString(1, lecCode);
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				return true;
+			}
+		} finally {
+			DBUtil.close(con, pstmt);
+		}
+		return false;
+	}
+	
+	public static boolean verifyNewDay(String lecCode) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String stuCode = SugangMenuController.session.getCode();
+		
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(sql.getProperty("verifyNewDay"));
+			pstmt.setString(1, stuCode);
+			pstmt.setString(2, lecCode);
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				return true;
+			}
+		} finally {
+			DBUtil.close(con, pstmt);
+		}
+		return false;
+	}
+	
 	public static boolean deleteRegistration(String lecCode) throws SQLException {
 		Connection con = null;
 		Statement stmt = null;

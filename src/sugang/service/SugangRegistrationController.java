@@ -10,13 +10,13 @@ import sugang.model.dto.RegistrationDTO;
 import sugang.view.RunningEndView;
 
 public class SugangRegistrationController {
-	
+
 	public static boolean getAllLectures() {
 		ArrayList<LectureDTO> allLectureList = null;
 		boolean isData = false;
 		try {
 			allLectureList = LectureDAO.getAllLectures();
-			if(allLectureList.size() != 0){
+			if (allLectureList.size() != 0) {
 				RunningEndView.lectureListView(allLectureList);
 				isData = true;
 			}
@@ -32,7 +32,7 @@ public class SugangRegistrationController {
 		boolean isData = false;
 		try {
 			lecturLlist = LectureDAO.getLectureByMname(majName);
-			if(lecturLlist.size() != 0){
+			if (lecturLlist.size() != 0) {
 				RunningEndView.lectureListView(lecturLlist);
 				isData = true;
 			}
@@ -42,12 +42,13 @@ public class SugangRegistrationController {
 		}
 		return isData;
 	};
+
 	public static boolean getLectureByLname(String lecName) {
 		ArrayList<LectureDTO> lecturLlist = null;
 		boolean isData = false;
 		try {
 			lecturLlist = LectureDAO.getLectureByLname(lecName);
-			if(lecturLlist.size() != 0){
+			if (lecturLlist.size() != 0) {
 				RunningEndView.lectureListView(lecturLlist);
 				isData = true;
 			}
@@ -57,12 +58,13 @@ public class SugangRegistrationController {
 		}
 		return isData;
 	};
+
 	public static boolean getLectureByLcode(String lecCode) {
 		ArrayList<LectureDTO> lecturLlist = null;
 		boolean isData = false;
 		try {
 			lecturLlist = LectureDAO.getLectureByLcode(lecCode);
-			if(lecturLlist.size() != 0){
+			if (lecturLlist.size() != 0) {
 				RunningEndView.lectureListView(lecturLlist);
 				isData = true;
 			}
@@ -72,12 +74,13 @@ public class SugangRegistrationController {
 		}
 		return isData;
 	};
+
 	public static boolean getRegistration(String stuCode) {
 		ArrayList<RegistrationDTO> allRegistrationList = null;
 		boolean isData = false;
 		try {
 			allRegistrationList = RegistrationDAO.getRegistration(stuCode);
-			if(allRegistrationList.size() != 0){
+			if (allRegistrationList.size() != 0) {
 				RunningEndView.registrationListView(allRegistrationList);
 				isData = true;
 			}
@@ -87,32 +90,43 @@ public class SugangRegistrationController {
 		}
 		return isData;
 	};
-	
+
 	public static boolean addRegistration(String lecCode) {
 		boolean isData = false;
 		try {
-//			if(RegistrationDAO.addRegistration(lecCode)){
-//				RunningEndView.showSuccess("수강신청 성공");
-//				isData = true;
-//			}
-//			else{
-//				RunningEndView.showError("수강신청 실패(인원 초과 or 시간 겹침 or 이미 신청한 과목)");
-//			}
-			RegistrationDAO.addRegistration(lecCode);
+			if(RegistrationDAO.verifyCount(lecCode)){
+				if(RegistrationDAO.verifyNewDay(lecCode)) {
+					if (RegistrationDAO.addNewDayRegistration(lecCode)) {
+						RunningEndView.showSuccess("수강신청 성공");
+						isData = true;
+					} else {
+						RunningEndView.showError("수강신청 실패(시간 겹침 or 이미 신청한 과목)");
+					}
+				} else {
+					if (RegistrationDAO.addRegistration(lecCode)) {
+						RunningEndView.showSuccess("수강신청 성공");
+						isData = true;
+					} else {
+						RunningEndView.showError("수강신청 실패(시간 겹침 or 이미 신청한 과목)");
+					}
+				}
+			} else {
+				RunningEndView.showError("수강신청 실패(인원 초과)");
+			}
 		} catch (SQLException s) {
 			s.printStackTrace();
 			RunningEndView.showError("수강신청 에러 발생");
 		}
 		return isData;
 	};
+
 	public static boolean deleteRegistration(String lecCode) {
 		boolean isData = false;
 		try {
-			if(RegistrationDAO.deleteRegistration(lecCode)){
+			if (RegistrationDAO.deleteRegistration(lecCode)) {
 				RunningEndView.showSuccess("수강취소 성공");
 				isData = true;
-			}
-			else{
+			} else {
 				RunningEndView.showError("해당 코드의 강의내역이 없습니다");
 			}
 		} catch (SQLException s) {
