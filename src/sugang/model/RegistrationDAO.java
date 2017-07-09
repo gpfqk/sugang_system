@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import sugang.model.dto.LectureDTO;
 import sugang.model.dto.RegistrationDTO;
 import sugang.model.util.DBUtil;
 
@@ -36,4 +35,21 @@ public class RegistrationDAO {
 		}
 		return all;
 	}
+	
+	public static boolean addRegistration(String lecCode) throws SQLException {
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//		try {
+//			con = DBUtil.getConnection();
+//			pstmt = con.prepareStatement(sql.getProperty("addRegistration"));
+//			int result = pstmt.executeUpdate();
+//			if (result == 1) {
+//				return true;
+//			}
+//		} finally {
+//			DBUtil.close(con, pstmt);
+//		}
+		return false;
+	}
+	
 }

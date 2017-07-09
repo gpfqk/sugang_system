@@ -92,7 +92,7 @@ public class SugangRegistrationController {
 		ArrayList<RegistrationDTO> allRegistrationList = null;
 		boolean isData = false;
 		try {
-			if(RegistrationDAO.addRegistration(lecCode) != 0){
+			if(RegistrationDAO.addRegistration(lecCode)){
 				RunningEndView.registrationListView(allRegistrationList);
 				isData = true;
 			}
