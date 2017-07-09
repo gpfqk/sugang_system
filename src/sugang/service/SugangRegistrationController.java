@@ -89,7 +89,6 @@ public class SugangRegistrationController {
 	};
 	
 	public static boolean addRegistration(String lecCode) {
-		ArrayList<RegistrationDTO> allRegistrationList = null;
 		boolean isData = false;
 		try {
 			if(RegistrationDAO.addRegistration(lecCode)){
@@ -106,7 +105,6 @@ public class SugangRegistrationController {
 		return isData;
 	};
 	public static boolean deleteRegistration(String lecCode) {
-		ArrayList<RegistrationDTO> allRegistrationList = null;
 		boolean isData = false;
 		try {
 			if(RegistrationDAO.deleteRegistration(lecCode)){
