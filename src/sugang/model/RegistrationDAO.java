@@ -53,7 +53,6 @@ public class RegistrationDAO {
 			pstmt.setString(3, stuCode);
 			pstmt.setString(4, lecCode);
 			int result = pstmt.executeUpdate();
-			all = new ArrayList<RegistrationDTO>();
 			if (result == 1) {
 				return true;
 			}
@@ -63,8 +62,7 @@ public class RegistrationDAO {
 		return false;
 //		Connection con = null;
 //		Statement stmt = null;
-//		ResultSet rset1 = null;
-//		ResultSet rset2 = null;
+//		ResultSet rset = null;
 //		LectureDTO lecture = null;
 //		ArrayList<RegistrationDTO> registrationList = null;
 //		String stuCode = SugangMenuController.session.getCode();
@@ -73,21 +71,22 @@ public class RegistrationDAO {
 //		try {
 //			con = DBUtil.getConnection();
 //			stmt = con.createStatement();
-//			rset1 	= stmt.executeQuery("select * from lecturelist "
+//			rset 	= stmt.executeQuery("select * from lecturelist "
 //													+ "where lcode = '"+lecCode+"' and '"+lecCode
 //													+"' not in(select r.lcode from registration r, registrationlist rl "
 //													+ "where r.SCODE = '"+stuCode+"' and r.LCODE = rl.LCODE)");
-//			while(rset1.next()){
-//				lecture = new LectureDTO(rset1.getString(1), rset1.getString(2), rset1.getString(3), rset1.getString(4),
-//						rset1.getString(5), rset1.getString(6), rset1.getString(7), rset1.getInt(8), rset1.getInt(9));
+//			while(rset.next()){
+//				lecture = new LectureDTO(rset.getString(1), rset.getString(2), rset.getString(3), rset.getString(4),
+//						rset.getString(5), rset.getString(6), rset.getString(7), rset.getInt(8), rset.getInt(9));
 //			}
-//			rset2 	= stmt.executeQuery("select r.lcode from registration r, registrationlist rl "
+//			rset =null;
+//			rset 	= stmt.executeQuery("select r.lcode from registration r, registrationlist rl "
 //													+ "where r.SCODE = '"+stuCode+"' and r.LCODE = rl.LCODE");
 //			
 //			registrationList = new ArrayList<RegistrationDTO>();
-//			while (rset2.next()) {
-//				registrationList.add(new RegistrationDTO(rset2.getString(1), rset2.getString(2), rset2.getString(3), rset2.getString(4),
-//						rset2.getString(5), rset2.getString(6), rset2.getString(7)));
+//			while (rset.next()) {
+//				registrationList.add(new RegistrationDTO(rset.getString(1), rset.getString(2), rset.getString(3), rset.getString(4),
+//						rset.getString(5), rset.getString(6), rset.getString(7)));
 //			}
 //			
 //			if(lecture != null){
@@ -108,7 +107,7 @@ public class RegistrationDAO {
 //				
 //			}
 //		} finally {
-//			DBUtil.close(con, stmt);
+//			DBUtil.close(con, stmt, rset);
 //		}
 //		return false;
 	}
