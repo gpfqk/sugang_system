@@ -112,7 +112,7 @@ public class RegistrationDAO {
 			pstmt.setString(1, stuCode);
 			pstmt.setString(2, lecCode);
 			rset = pstmt.executeQuery();
-			if (rset.next()) {
+			if (!rset.next()) {
 				return true;
 			}
 		} finally {
