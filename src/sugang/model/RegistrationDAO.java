@@ -12,6 +12,7 @@ import sugang.model.dto.LectureDTO;
 import sugang.model.dto.RegistrationDTO;
 import sugang.model.util.DBUtil;
 import sugang.service.SugangMenuController;
+import sugang.view.RunningEndView;
 
 public class RegistrationDAO {
 	static Properties sql = DBUtil.getProperties();
@@ -42,7 +43,6 @@ public class RegistrationDAO {
 	public static boolean addRegistration(String lecCode) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		ArrayList<RegistrationDTO> all = null;
 		String stuCode = SugangMenuController.session.getCode();
 
 		try {
@@ -60,58 +60,67 @@ public class RegistrationDAO {
 			DBUtil.close(con, pstmt);
 		}
 		return false;
-//		Connection con = null;
-//		Statement stmt = null;
-//		ResultSet rset = null;
-//		LectureDTO lecture = null;
-//		ArrayList<RegistrationDTO> registrationList = null;
-//		String stuCode = SugangMenuController.session.getCode();
-//		//System.out.println("lecCode"+lecCode);
-//		//System.out.println("stuCode"+stuCode);
-//		try {
-//			con = DBUtil.getConnection();
-//			stmt = con.createStatement();
-//			rset 	= stmt.executeQuery("select * from lecturelist "
-//													+ "where lcode = '"+lecCode+"' and '"+lecCode
-//													+"' not in(select r.lcode from registration r, registrationlist rl "
-//													+ "where r.SCODE = '"+stuCode+"' and r.LCODE = rl.LCODE)");
-//			while(rset.next()){
-//				lecture = new LectureDTO(rset.getString(1), rset.getString(2), rset.getString(3), rset.getString(4),
-//						rset.getString(5), rset.getString(6), rset.getString(7), rset.getInt(8), rset.getInt(9));
-//			}
-//			rset =null;
-//			rset 	= stmt.executeQuery("select r.lcode from registration r, registrationlist rl "
-//													+ "where r.SCODE = '"+stuCode+"' and r.LCODE = rl.LCODE");
-//			
-//			registrationList = new ArrayList<RegistrationDTO>();
-//			while (rset.next()) {
-//				registrationList.add(new RegistrationDTO(rset.getString(1), rset.getString(2), rset.getString(3), rset.getString(4),
-//						rset.getString(5), rset.getString(6), rset.getString(7)));
-//			}
-//			
-//			if(lecture != null){
-//				for(int i ; i < registrationList.size() ; i++){ 
-//					if(lecture.getLecDay().equals(registrationList.get(i))){
-//						
-//					}
-//					int result = stmt.executeUpdate("delete from registration where lcode = '" + lecCode + "' and sCode = '"
-//							+ SugangMenuController.session.getCode() + "'");
-//					if (result == 1) {
-//						int result2 = stmt
-//								.executeUpdate("update lecture set lcurrent = lcurrent - 1 where lcode = '" + lecCode + "'");
-//						if (result2 == 1) {
-//							return true;
-//						}
-//					}
-//				}
-//				
-//			}
-//		} finally {
-//			DBUtil.close(con, stmt, rset);
-//		}
-//		return false;
+	}
+	
+	public static boolean addNewDayRegistration(String lecCode) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String stuCode = SugangMenuController.session.getCode();
+
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(sql.getProperty("addNewDayRegistration"));
+			pstmt.setString(1, stuCode);
+			pstmt.setString(2, lecCode);
+			int result = pstmt.executeUpdate();
+			if (result == 1) {
+				return true;
+			}
+		} finally {
+			DBUtil.close(con, pstmt);
+		}
+		return false;
 	}
 
+	public static boolean verifyCount(String lecCode) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(sql.getProperty("verifyCount"));
+			pstmt.setString(1, lecCode);
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				return true;
+			}
+		} finally {
+			DBUtil.close(con, pstmt);
+		}
+		return false;
+	}
+	
+	public static boolean verifyNewDay(String lecCode) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String stuCode = SugangMenuController.session.getCode();
+		
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(sql.getProperty("verifyNewDay"));
+			pstmt.setString(1, stuCode);
+			pstmt.setString(2, lecCode);
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				return true;
+			}
+		} finally {
+			DBUtil.close(con, pstmt);
+		}
+		return false;
+	}
+	
 	public static boolean deleteRegistration(String lecCode) throws SQLException {
 		Connection con = null;
 		Statement stmt = null;
