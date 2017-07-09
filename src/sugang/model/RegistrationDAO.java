@@ -11,6 +11,7 @@ import java.util.Properties;
 import sugang.model.dto.RegistrationDTO;
 import sugang.model.util.DBUtil;
 import sugang.service.SugangMenuController;
+import sugang.view.RunningEndView;
 
 public class RegistrationDAO {
 	static Properties sql = DBUtil.getProperties();
@@ -39,19 +40,22 @@ public class RegistrationDAO {
 	}
 
 	public static boolean addRegistration(String lecCode) throws SQLException {
-		// Connection con = null;
-		// PreparedStatement pstmt = null;
-		// try {
-		// con = DBUtil.getConnection();
-		// pstmt = con.prepareStatement(sql.getProperty("addRegistration"));
-		// pstmt.setString(1, activistId);
-		// int result = pstmt.executeUpdate();
-		// if (result == 1) {
-		// return true;
-		// }
-		// } finally {
-		// DBUtil.close(con, pstmt);
-		// }
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(sql.getProperty("addActivist"));
+			pstmt.setString(1, SugangMenuController.session.getCode());
+			pstmt.setString(2, lecCode);
+			pstmt.setString(3, SugangMenuController.session.getCode());
+			pstmt.setString(4, lecCode);
+			int result = pstmt.executeUpdate();
+			if (result == 1) {
+				return true;
+			}
+		} finally {
+			DBUtil.close(con, pstmt);
+		}
 		return false;
 	}
 

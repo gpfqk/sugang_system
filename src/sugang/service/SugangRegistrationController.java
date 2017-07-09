@@ -92,13 +92,14 @@ public class SugangRegistrationController {
 		ArrayList<RegistrationDTO> allRegistrationList = null;
 		boolean isData = false;
 		try {
-			if(RegistrationDAO.addRegistration(lecCode)){
-				RunningEndView.showSuccess("수강신청 성공");
-				isData = true;
-			}
-			else{
-				RunningEndView.showError("수강신청 실패(인원 초과 or 시간 겹침 or 이미 신청한 과목)");
-			}
+//			if(RegistrationDAO.addRegistration(lecCode)){
+//				RunningEndView.showSuccess("수강신청 성공");
+//				isData = true;
+//			}
+//			else{
+//				RunningEndView.showError("수강신청 실패(인원 초과 or 시간 겹침 or 이미 신청한 과목)");
+//			}
+			RegistrationDAO.addRegistration(lecCode);
 		} catch (SQLException s) {
 			s.printStackTrace();
 			RunningEndView.showError("수강신청 에러 발생");
