@@ -87,4 +87,19 @@ public class SugangRegistrationController {
 		}
 		return isData;
 	};
+	
+	public static boolean addRegistration(String lecCode) {
+		ArrayList<RegistrationDTO> allRegistrationList = null;
+		boolean isData = false;
+		try {
+			if(RegistrationDAO.addRegistration(lecCode) != 0){
+				RunningEndView.registrationListView(allRegistrationList);
+				isData = true;
+			}
+		} catch (SQLException s) {
+			s.printStackTrace();
+			RunningEndView.showError("수강신청 에러 발생");
+		}
+		return isData;
+	};
 }

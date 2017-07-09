@@ -31,7 +31,8 @@ public class SugangMenuController {
 					logInfo[1] = in.readLine();
 					if (StudentDAO.getLoginInfo(logInfo) != null) {
 						RunningEndView.loginInfoView(StudentDAO.getLoginInfo(logInfo));
-						menu = 2;
+						menu = 1;
+						continue;
 					} else {
 						RunningEndView.showError("아이디 혹은 비밀번호 입력값이 잘못되었습니다.");
 						continue;
@@ -103,8 +104,9 @@ public class SugangMenuController {
 							continue;
 						}
 					}
-					else{
-						menu = 11;
+					else{ 
+						System.out.println("검색된 결과가 없으므로 메인으로 돌아갑니다");
+						menu = 1;
 						continue;
 					}
 				case 13:
@@ -130,6 +132,7 @@ public class SugangMenuController {
 						}
 					}
 					else{
+						System.out.println("검색된 결과가 없으므로 강의조회메뉴로 돌아갑니다");
 						menu = 11;
 						continue;
 					}
@@ -156,6 +159,7 @@ public class SugangMenuController {
 						}
 					}
 					else{
+						System.out.println("검색된 결과가 없으므로 강의조회메뉴로 돌아갑니다");
 						menu = 11;
 						continue;
 					}
@@ -181,6 +185,7 @@ public class SugangMenuController {
 						}
 					}
 					else{
+						System.out.println("검색된 결과가 없으므로 강의조회메뉴로 돌아갑니다");
 						menu = 11;
 						continue;
 					}
@@ -206,6 +211,7 @@ public class SugangMenuController {
 						}
 					}
 					else{
+						System.out.println("검색된 결과가 없으므로 강의조회메뉴로 돌아갑니다");
 						menu = 11;
 						continue;
 					}
@@ -224,13 +230,14 @@ public class SugangMenuController {
 				case 1111:// 수강신청하기
 					System.out.println("---------수강신청하기----------");
 					System.out.print("수강신청할 강의의 코드를 입력하세요 : ");
-					if (in.readLine() != null) {
-						/*
-						 * 수강신청하기 로직
-						 */
+					String lecCode = in.readLine();
+					if (SugangRegistrationController.addRegistration(lecCode)) {
+						System.out.println("수강신청을 완료했습니다");
+						selectedMenu = 1;
+						continue;
 					} else {
-						System.out.println("존재하지 않는 강의코드입니다");
-						selectedMenu = 12;
+						System.out.println("수강신청에 실패했습니다");
+						selectedMenu = 11;
 						continue;
 					}
 				}
