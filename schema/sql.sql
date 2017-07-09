@@ -50,4 +50,4 @@ where lcode = '2222' and '2222' not in(select r.lcode
 														      where r.SCODE = '201314135' and r.LCODE = rl.LCODE)
 
 														      
-														      
+select * from lecture;			      
