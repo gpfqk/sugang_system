@@ -257,18 +257,11 @@ public class SugangMenuController {
 
 	public static void newRegistration() {
 		RunningEndView.showMenuInfomation("NewRegistration");
+		String lecCode = null;
 		try {
-			if (in.readLine() != null) {
-				/*
-				 * 수강신청하기 로직 SugangRegistrationController.addRegistration(String
-				 * lecCode)
-				 */
-			} else {
-
-				RunningEndView.showError("존재하지 않는 강의코드입니다");
-				selectedMenu = 12;
-				return;
-			}
+			lecCode = in.readLine();
+			SugangRegistrationController.addRegistration(lecCode);
+			menu = 11;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

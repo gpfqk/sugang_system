@@ -40,4 +40,14 @@ select * from lecture;
 
 [강의코드:1111 | 강의명:소프트웨어공학 | 학과:소프트웨어학과 | 담당교수 : 남원홍 | 월 13:00~15:00 | 1/30]
 
+select * from registrationlist;
 
+
+select * 
+from lecturelist 
+where lcode = '2222' and '2222' not in(select r.lcode 
+														      from registration r, registrationlist rl 
+														      where r.SCODE = '201314135' and r.LCODE = rl.LCODE)
+
+														      
+														      

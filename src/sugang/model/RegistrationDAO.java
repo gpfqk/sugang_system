@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import sugang.model.dto.LectureDTO;
 import sugang.model.dto.RegistrationDTO;
 import sugang.model.util.DBUtil;
 import sugang.service.SugangMenuController;
@@ -42,12 +43,15 @@ public class RegistrationDAO {
 	public static boolean addRegistration(String lecCode) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		ArrayList<RegistrationDTO> all = null;
+		String stuCode = SugangMenuController.session.getCode();
+
 		try {
 			con = DBUtil.getConnection();
-			pstmt = con.prepareStatement(sql.getProperty("addActivist"));
-			pstmt.setString(1, SugangMenuController.session.getCode());
+			pstmt = con.prepareStatement(sql.getProperty("addRegistration"));
+			pstmt.setString(1, stuCode);
 			pstmt.setString(2, lecCode);
-			pstmt.setString(3, SugangMenuController.session.getCode());
+			pstmt.setString(3, stuCode);
 			pstmt.setString(4, lecCode);
 			int result = pstmt.executeUpdate();
 			if (result == 1) {
