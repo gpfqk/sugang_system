@@ -94,18 +94,22 @@ public class SugangRegistrationController {
 	public static boolean addRegistration(String lecCode) {
 		boolean isData = false;
 		try {
-			if(RegistrationDAO.verifyCount(lecCode)){
-				if(RegistrationDAO.verifyNewDay(lecCode)) {
+			if (RegistrationDAO.verifyCount(lecCode)) {
+				if (RegistrationDAO.verifyNewDay(lecCode)) {
 					if (RegistrationDAO.addNewDayRegistration(lecCode)) {
-						RunningEndView.showSuccess("수강신청 성공");
-						isData = true;
+						if (RegistrationDAO.updateCurrentCount(lecCode)) {
+							RunningEndView.showSuccess("수강신청 성공");
+							isData = true;
+						}
 					} else {
 						RunningEndView.showError("수강신청 실패(시간 겹침 or 이미 신청한 과목)");
 					}
 				} else {
 					if (RegistrationDAO.addRegistration(lecCode)) {
-						RunningEndView.showSuccess("수강신청 성공");
-						isData = true;
+						if (RegistrationDAO.updateCurrentCount(lecCode)) {
+							RunningEndView.showSuccess("수강신청 성공");
+							isData = true;
+						}
 					} else {
 						RunningEndView.showError("수강신청 실패(시간 겹침 or 이미 신청한 과목)");
 					}
@@ -115,7 +119,7 @@ public class SugangRegistrationController {
 			}
 		} catch (SQLException s) {
 			s.printStackTrace();
-			RunningEndView.showError("수강신청 에러 발생");
+			RunningEndView.showError("수강신청 SQL에러 발생");
 		}
 		return isData;
 	};
