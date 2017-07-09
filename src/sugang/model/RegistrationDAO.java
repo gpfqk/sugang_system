@@ -40,6 +40,23 @@ public class RegistrationDAO {
 		return all;
 	}
 
+	public static boolean updateCurrentCount(String lecCode) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(sql.getProperty("updateCurrentCount"));
+			pstmt.setString(1, lecCode);
+			int result = pstmt.executeUpdate();
+			if (result == 1) {
+				return true;
+			}
+		} finally {
+			DBUtil.close(con, pstmt);
+		}
+		return false;
+	}
+	
 	public static boolean addRegistration(String lecCode) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
