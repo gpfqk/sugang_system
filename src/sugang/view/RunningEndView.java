@@ -41,8 +41,23 @@ public class RunningEndView {
 	public static void showError(String message) {
 		System.out.println(message);
 	}
-	
-	public static void showMenu(){
-		
+
+	public static void showMenuInfomation(String flag) {
+		if (flag.equals("MainMenu")) {
+			System.out.println("---------메인메뉴----------");
+			System.out.println("1. 강의조회/신청");
+			System.out.println("2. 수강내역조회/편집");
+			System.out.println("3. 종료");
+			System.out.print("번호를 선택하세요 : ");
+		}
+		else if(flag.equals("LectureMenu")) {
+			System.out.println("---------강의조회/신청----------");
+			System.out.println("1. 전체강의조회");
+			System.out.println("2. 학과별조회");
+			System.out.println("3. 강의명조회");
+			System.out.println("4. 강의코드조회");
+			System.out.println("5. 메인으로");
+			System.out.print("번호를 선택하세요 : ");
+		}
 	}
 }
