@@ -1,9 +1,3 @@
-/*
- * menu
- * 1 : login
- * 
- */
-
 package sugang.service;
 
 import java.io.BufferedReader;
@@ -11,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import sugang.model.StudentDAO;
+import sugang.model.dto.StudentDTO;
 import sugang.view.RunningEndView;
 
 public class SugangMenuController {
@@ -18,6 +13,7 @@ public class SugangMenuController {
 	static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 	static int menu = 0;
 	static int selectedMenu = 0;
+	public static StudentDTO session = null;
 
 	public static void initStartMenu() {
 
@@ -26,27 +22,37 @@ public class SugangMenuController {
 				switch (menu) {
 				case 0: // 로그인
 					loginMenu();
+					continue;
 				case 1: // 메인메뉴
 					mainMenu();
+					continue;
 				case 11: // 강의조회/신청
 					showLectureList();
-				case 12:
+					continue;
+				case 12: // 수강내역조회/편집
 					showRegistrationList();
-				case 13:
-					System.out.println(">>>>>>>>>>>>>시스템을 종료합니다<<<<<<<<<<<<<");
+					continue;
+				case 13: // 종료
+					RunningEndView.showMenuInfomation("Exit");
 					break;
 				case 111:// 전체강의조회
 					showAllLectureList();
+					continue;
 				case 112:// 학과별조회
 					showByMajorList();
+					continue;
 				case 113:// 강의명조회
 					showByLectureNameList();
+					continue;
 				case 114:// 강의코드조회
 					showByLectureCodeList();
+					continue;
 				case 121:// 수강취소
 					deleteRegistration();
+					continue;
 				case 1111:// 수강신청하기
 					newRegistration();
+					continue;
 				}
 				break;
 			}
@@ -62,17 +68,15 @@ public class SugangMenuController {
 	}
 
 	public static void loginMenu() {
-		System.out.println(">>>>>>>>>>>>>수강신청시스템<<<<<<<<<<<<");
-		System.out.println("***** 로그인 *****");
-		System.out.print("아이디: ");
+		RunningEndView.showMenuInfomation("LoginMenu");
 		try {
 			logInfo[0] = in.readLine();
 			System.out.print("비밀번호: ");
 			logInfo[1] = in.readLine();
-			if (StudentDAO.getLoginInfo(logInfo) != null) {
-				RunningEndView.loginInfoView(StudentDAO.getLoginInfo(logInfo));
+			session = StudentDAO.getLoginInfo(logInfo);
+			if (session != null) {
+				RunningEndView.loginInfoView(session);
 				menu = 1;
-				return;
 			} else {
 				RunningEndView.showError("아이디 혹은 비밀번호 입력값이 잘못되었습니다.");
 				loginMenu();
@@ -89,18 +93,14 @@ public class SugangMenuController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (selectedMenu == 1) {
+		if (selectedMenu == 1) {// 강의조회/신청
 			menu = 11;
-			return;
-		} else if (selectedMenu == 2) {
+		} else if (selectedMenu == 2) {// 수강내역조회/편집
 			menu = 12;
-			return;
-		} else if (selectedMenu == 3) {
+		} else if (selectedMenu == 3) {// 종료
 			menu = 13;
-			return;
 		} else {
 			RunningEndView.showError("올바른 번호를 입력하세요");
-			return;
 		}
 	}
 
@@ -111,49 +111,37 @@ public class SugangMenuController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (selectedMenu == 1) {// 전체강의조회로
+		if (selectedMenu == 1) {// 전체강의조회
 			menu = 111;
-			return;
-		} else if (selectedMenu == 2) {// 학과별조회로
+		} else if (selectedMenu == 2) {// 학과별조회
 			menu = 112;
-			return;
-		} else if (selectedMenu == 3) {// 강의명조회로
+		} else if (selectedMenu == 3) {// 강의명조회
 			menu = 113;
-			return;
-		} else if (selectedMenu == 4) {// 강의코드조회로
+		} else if (selectedMenu == 4) {// 강의코드조회
 			menu = 114;
-			return;
 		} else if (selectedMenu == 5) {// 메인으로
 			menu = 1;
-			return;
 		} else {
 			RunningEndView.showError("올바른 번호를 입력하세요");
-			return;
 		}
 	}
 
 	public static void showRegistrationList() {
-		System.out.println("---------수강내역조회/편집----------");
+		RunningEndView.showMenuInfomation("ShowRegistrationList");
 		try {
-			if (SugangRegistrationController.getRegistration(StudentDAO.getLoginInfo(logInfo).getCode())) {
-				System.out.println("1. 수강취소하기(미구현)");
-				System.out.println("2. 메인으로");
-				System.out.print("번호를 선택하세요 : ");
+			if (SugangRegistrationController.getRegistration(session.getCode())) {
+				RunningEndView.showMenuInfomation("DeleteRegistration");
 				selectedMenu = Integer.parseInt(in.readLine());
-				if (selectedMenu == 1) {// 수강취소하기로
+				if (selectedMenu == 1) {// 수강취소하기
 					menu = 121;
-					return;
 				} else if (selectedMenu == 2) {// 메인으로
 					menu = 1;
-					return;
 				} else {
 					RunningEndView.showError("올바른 번호를 입력하세요");
-					return;
 				}
 			} else {
-				RunningEndView.showError("수강 신청 내역이 존재하지 않습니다.");
+				RunningEndView.showError("수강 신청 내역이 존재하지 않습니다");
 				menu = 1;
-				return;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -161,146 +149,45 @@ public class SugangMenuController {
 	}
 
 	public static void showAllLectureList() {
-		System.out.println("---------전체강의조회----------");
+		RunningEndView.showMenuInfomation("ShowAllLectureList");
 		if (SugangRegistrationController.getAllLectures()) {
-			System.out.println("1. 수강신청하기(미구현)");
-			System.out.println("2. 강의조회화면으로");
-			System.out.print("번호를 선택하세요 : ");
+			RunningEndView.showMenuInfomation("Registration");
 			try {
 				selectedMenu = Integer.parseInt(in.readLine());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			if (selectedMenu == 1) {
+			if (selectedMenu == 1) {// 수강신청하기
 				menu = 1111;
-				return;
-			} else if (selectedMenu == 2) {
+			} else if (selectedMenu == 2) {// 강의조회화면으로
 				menu = 11;
-				return;
 			} else {
 				RunningEndView.showError("올바른 번호를 입력하세요");
-				return;
 			}
 		} else {
+			RunningEndView.showError("검색된 강의가 없습니다");
 			menu = 11;
-			return;
 		}
 	}
 
 	public static void showByMajorList() {
-		System.out.println("---------학과별조회----------");
-		System.out.print("학과명을 입력하세요 : ");
+		RunningEndView.showMenuInfomation("ShowByMajorList");
 		String mName = null;
 		try {
 			mName = in.readLine();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		if (SugangRegistrationController.getLectureByMname(mName)) {
-			System.out.println("1. 수강신청하기(미구현)");
-			System.out.println("2. 강의조회화면으로");
-			System.out.print("번호를 선택하세요 : ");
-			try {
+			if (SugangRegistrationController.getLectureByMname(mName)) {
+				RunningEndView.showMenuInfomation("Registration");
 				selectedMenu = Integer.parseInt(in.readLine());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			if (selectedMenu == 1) {
-				menu = 1111;
-				return;
-			} else if (selectedMenu == 2) {
+				if (selectedMenu == 1) {// 수강신청하기
+					menu = 1111;
+				} else if (selectedMenu == 2) {// 강의조회화면으로
+					menu = 11;
+				} else {
+					RunningEndView.showError("올바른 번호를 입력하세요");
+				}
+			} else {
+				RunningEndView.showError("검색된 강의가 없습니다");
 				menu = 11;
-				return;
-			} else {
-				RunningEndView.showError("올바른 번호를 입력하세요");
-				return;
-			}
-		} else {
-			menu = 11;
-			return;
-		}
-	}
-
-	public static void showByLectureNameList() {
-		System.out.println("---------강의명조회----------");
-		System.out.print("강의명을 입력하세요 : ");
-		String lName = null;
-		;
-		try {
-			lName = in.readLine();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		if (SugangRegistrationController.getLectureByLname(lName)) {
-			System.out.println("1. 수강신청하기(미구현)");
-			System.out.println("2. 강의조회화면으로");
-			System.out.print("번호를 선택하세요 : ");
-			try {
-				selectedMenu = Integer.parseInt(in.readLine());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			if (selectedMenu == 1) {
-				menu = 1111;
-				return;
-			} else if (selectedMenu == 2) {
-				menu = 11;
-				return;
-			} else {
-				RunningEndView.showError("올바른 번호를 입력하세요");
-				return;
-			}
-		} else {
-			menu = 11;
-			return;
-		}
-	}
-
-	public static void showByLectureCodeList() {
-		System.out.println("---------강의코드조회----------");
-		System.out.print("강의코드를 입력하세요 : ");
-		String lCode = null;
-		try {
-			lCode = in.readLine();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		if (SugangRegistrationController.getLectureByLcode(lCode)) {
-			System.out.println("1. 수강신청하기(미구현)");
-			System.out.println("2. 강의조회화면으로");
-			System.out.print("번호를 선택하세요 : ");
-			try {
-				selectedMenu = Integer.parseInt(in.readLine());
-			} catch (NumberFormatException | IOException e) {
-				e.printStackTrace();
-			}
-			if (selectedMenu == 1) {
-				menu = 1111;
-				return;
-			} else if (selectedMenu == 2) {
-				menu = 11;
-				return;
-			} else {
-				RunningEndView.showError("올바른 번호를 입력하세요");
-				return;
-			}
-		} else {
-			menu = 11;
-			return;
-		}
-	}
-
-	public static void deleteRegistration() {
-		System.out.println("---------수강취소----------");
-		System.out.print("취소할 강의의 코드를 입력하세요 : ");
-		try {
-			if (in.readLine() != null) {
-				/*
-				 * 수강취소 로직
-				 */
-			} else {
-				RunningEndView.showError("존재하지 않는 강의코드입니다");
-				selectedMenu = 12;
 				return;
 			}
 		} catch (IOException e) {
@@ -308,15 +195,76 @@ public class SugangMenuController {
 		}
 	}
 
+	public static void showByLectureNameList() {
+		RunningEndView.showMenuInfomation("ShowByLectureNameList");
+		String lName = null;
+		try {
+			lName = in.readLine();
+			if (SugangRegistrationController.getLectureByLname(lName)) {
+				RunningEndView.showMenuInfomation("Registration");
+				selectedMenu = Integer.parseInt(in.readLine());
+				if (selectedMenu == 1) {// 수강신청하기
+					menu = 1111;
+				} else if (selectedMenu == 2) {// 강의조회화면으로
+					menu = 11;
+				} else {
+					RunningEndView.showError("올바른 번호를 입력하세요");
+				}
+			} else {
+				RunningEndView.showError("검색된 강의가 없습니다");
+				menu = 11;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void showByLectureCodeList() {
+		RunningEndView.showMenuInfomation("ShowByLectureCodeList");
+		String lecCode = null;
+		try {
+			lecCode = in.readLine();
+			if (SugangRegistrationController.getLectureByLcode(lecCode)) {
+				RunningEndView.showMenuInfomation("Registration");
+				selectedMenu = Integer.parseInt(in.readLine());
+				if (selectedMenu == 1) {// 수강신청하기
+					menu = 1111;
+				} else if (selectedMenu == 2) {// 강의조회화면으로
+					menu = 11;
+				} else {
+					RunningEndView.showError("올바른 번호를 입력하세요");
+				}
+			} else {
+				RunningEndView.showError("검색된 강의가 없습니다");
+				menu = 11;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void deleteRegistration() {
+		RunningEndView.showMenuInfomation("DeleteRegistrationMenu");
+		String lecCode = null;
+		try {
+			lecCode = in.readLine();
+			SugangRegistrationController.deleteRegistration(lecCode);
+			menu = 12;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static void newRegistration() {
-		System.out.println("---------수강신청하기----------");
-		System.out.print("수강신청할 강의의 코드를 입력하세요 : ");
+		RunningEndView.showMenuInfomation("NewRegistration");
 		try {
 			if (in.readLine() != null) {
 				/*
-				 * 수강신청하기 로직
+				 * 수강신청하기 로직 SugangRegistrationController.addRegistration(String
+				 * lecCode)
 				 */
 			} else {
+
 				RunningEndView.showError("존재하지 않는 강의코드입니다");
 				selectedMenu = 12;
 				return;

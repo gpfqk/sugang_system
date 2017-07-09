@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
 import sugang.model.dto.RegistrationDTO;
 import sugang.model.util.DBUtil;
+import sugang.service.SugangMenuController;
 
 public class RegistrationDAO {
 	static Properties sql = DBUtil.getProperties();
@@ -35,21 +37,43 @@ public class RegistrationDAO {
 		}
 		return all;
 	}
-	
+
 	public static boolean addRegistration(String lecCode) throws SQLException {
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//		try {
-//			con = DBUtil.getConnection();
-//			pstmt = con.prepareStatement(sql.getProperty("addRegistration"));
-//			int result = pstmt.executeUpdate();
-//			if (result == 1) {
-//				return true;
-//			}
-//		} finally {
-//			DBUtil.close(con, pstmt);
-//		}
+		// Connection con = null;
+		// PreparedStatement pstmt = null;
+		// try {
+		// con = DBUtil.getConnection();
+		// pstmt = con.prepareStatement(sql.getProperty("addRegistration"));
+		// pstmt.setString(1, activistId);
+		// int result = pstmt.executeUpdate();
+		// if (result == 1) {
+		// return true;
+		// }
+		// } finally {
+		// DBUtil.close(con, pstmt);
+		// }
 		return false;
 	}
-	
+
+	public static boolean deleteRegistration(String lecCode) throws SQLException {
+		Connection con = null;
+		Statement stmt = null;
+		try {
+			con = DBUtil.getConnection();
+			stmt = con.createStatement();
+			int result1 = stmt.executeUpdate("delete from registration where lcode = '" + lecCode + "' and sCode = '"
+					+ SugangMenuController.session.getCode() + "'");
+			if (result1 == 1) {
+				int result2 = stmt
+						.executeUpdate("update lecture set lcurrent = lcurrent - 1 where lcode = '" + lecCode + "'");
+				if (result2 == 1) {
+					return true;
+				}
+			}
+		} finally {
+			DBUtil.close(con, stmt);
+		}
+		return false;
+	}
+
 }

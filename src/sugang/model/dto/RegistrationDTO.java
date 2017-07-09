@@ -83,21 +83,21 @@ public class RegistrationDTO {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("RegistrationDTO [lecCode=");
+		builder.append("[ 강의코드 : ");
 		builder.append(lecCode);
-		builder.append(", lecName=");
+		builder.append(" | 강의명 : ");
 		builder.append(lecName);
-		builder.append(", majName=");
+		builder.append(" | 학과 : ");
 		builder.append(majName);
-		builder.append(", proName=");
+		builder.append(" | 담당교수 : ");
 		builder.append(proName);
-		builder.append(", lecDay=");
+		builder.append(" | ");
 		builder.append(lecDay);
-		builder.append(", lecStartTime=");
+		builder.append(" ");
 		builder.append(lecStartTime);
-		builder.append(", lecEndTime=");
+		builder.append("~");
 		builder.append(lecEndTime);
-		builder.append("]");
+		builder.append(" ]");
 		return builder.toString();
 	}
 

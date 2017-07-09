@@ -93,8 +93,28 @@ public class SugangRegistrationController {
 		boolean isData = false;
 		try {
 			if(RegistrationDAO.addRegistration(lecCode)){
-				RunningEndView.registrationListView(allRegistrationList);
+				RunningEndView.showSuccess("수강신청 성공");
 				isData = true;
+			}
+			else{
+				RunningEndView.showError("수강신청 실패(인원 초과 or 시간 겹침 or 이미 신청한 과목)");
+			}
+		} catch (SQLException s) {
+			s.printStackTrace();
+			RunningEndView.showError("수강신청 에러 발생");
+		}
+		return isData;
+	};
+	public static boolean deleteRegistration(String lecCode) {
+		ArrayList<RegistrationDTO> allRegistrationList = null;
+		boolean isData = false;
+		try {
+			if(RegistrationDAO.deleteRegistration(lecCode)){
+				RunningEndView.showSuccess("수강취소 성공");
+				isData = true;
+			}
+			else{
+				RunningEndView.showError("해당 코드의 강의내역이 없습니다");
 			}
 		} catch (SQLException s) {
 			s.printStackTrace();
