@@ -9,6 +9,7 @@ insert into student values('201314134', '冠瘤后', 'soft', 'cesti0777', '1234');
 insert into student values('201212123', 'student3', 'soft', 'king7854', '1234');
 insert into student values('201412124', 'student4', 'soft', 'stu4', '1234');
 insert into student values('201512125', 'student5', 'soft', 'stu5', '1234');
+insert into student values('201512129', 'student6', 'soft', 'stu6', '1234');
 
 
 -- professor data 积己
@@ -41,10 +42,7 @@ insert into lecture values('1122','积魂包府','busi', 'busijjw', '荐', '13:00', '
 
 
 -- registration data 积己
-insert into registration values(registration_seq_rnum.nextval, '201314134', '1111');	
-update lecture set lcurrent = lcurrent+1 where lcode = '1111';
-insert into registration values(registration_seq_rnum.nextval, '201314134', '4444');
-update lecture set lcurrent = lcurrent+1 where lcode = '4444';
+
 insert into registration values(registration_seq_rnum.nextval, '201314134', '3333');
 update lecture set lcurrent = lcurrent+1 where lcode = '3333';
 insert into registration values(registration_seq_rnum.nextval, '201314135', '1111');
@@ -71,6 +69,8 @@ insert into registration values(registration_seq_rnum.nextval, '201412124', '222
 update lecture set lcurrent = lcurrent+1 where lcode = '2222';
 insert into registration values(registration_seq_rnum.nextval, '201412124', '3333');
 update lecture set lcurrent = lcurrent+1 where lcode = '3333';
+insert into registration values(registration_seq_rnum.nextval, '201512129', '1111');
+update lecture set lcurrent = lcurrent+1 where lcode = '1111';
 
 commit;
 
