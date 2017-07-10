@@ -94,28 +94,32 @@ public class SugangRegistrationController {
 	public static boolean addRegistration(String lecCode) {
 		boolean isData = false;
 		try {
-			if (RegistrationDAO.verifyCount(lecCode)) {
-				if (RegistrationDAO.verifyNewDay(lecCode)) {
-					if (RegistrationDAO.addNewDayRegistration(lecCode)) {
-						if (RegistrationDAO.updateCurrentCount(lecCode)) {
-							RunningEndView.showSuccess("수강신청 성공");
-							isData = true;
+			if (RegistrationDAO.verifyExist(lecCode)) {
+				if (RegistrationDAO.verifyCount(lecCode)) {
+					if (RegistrationDAO.verifyNewDay(lecCode)) {
+						if (RegistrationDAO.addNewDayRegistration(lecCode)) {
+							if (RegistrationDAO.updateCurrentCount(lecCode)) {
+								RunningEndView.showSuccess("수강신청 성공!");
+								isData = true;
+							}
+						} else {
+							RunningEndView.showError("기존에 신청한 과목과 시간이 중복되어 신청할 수 없습니다.");
 						}
 					} else {
-						RunningEndView.showError("수강신청 실패(시간 겹침 or 이미 신청한 과목)");
+						if (RegistrationDAO.addRegistration(lecCode)) {
+							if (RegistrationDAO.updateCurrentCount(lecCode)) {
+								RunningEndView.showSuccess("수강신청 성공!");
+								isData = true;
+							}
+						} else {
+							RunningEndView.showError("기존에 신청한 과목과 시간이 중복되어 신청할 수 없습니다.");
+						}
 					}
 				} else {
-					if (RegistrationDAO.addRegistration(lecCode)) {
-						if (RegistrationDAO.updateCurrentCount(lecCode)) {
-							RunningEndView.showSuccess("수강신청 성공");
-							isData = true;
-						}
-					} else {
-						RunningEndView.showError("수강신청 실패(시간 겹침 or 이미 신청한 과목)");
-					}
+					RunningEndView.showError("수용 가능 인원이 초과된 과목입니다.");
 				}
 			} else {
-				RunningEndView.showError("수강신청 실패(인원 초과)");
+				RunningEndView.showError("이미 신청된 과목입니다.");
 			}
 		} catch (SQLException s) {
 			s.printStackTrace();

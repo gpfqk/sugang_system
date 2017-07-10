@@ -117,6 +117,26 @@ public class RegistrationDAO {
 		return false;
 	}
 	
+	public static boolean verifyExist(String lecCode) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String stuCode = SugangMenuController.session.getCode();
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(sql.getProperty("verifyExist"));
+			pstmt.setString(1, stuCode);
+			pstmt.setString(2, lecCode);
+			rset = pstmt.executeQuery();
+			if (!rset.next()) {
+				return true;
+			}
+		} finally {
+			DBUtil.close(con, pstmt);
+		}
+		return false;
+	}
+	
 	public static boolean verifyNewDay(String lecCode) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;

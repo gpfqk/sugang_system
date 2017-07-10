@@ -30,13 +30,13 @@ insert into professor values('busijjw', '장진욱', 'busi', '정교수');
 -- lecture data 생성
 insert into lecture values('1111','소프트웨어공학','soft', 'softnam', '월', '13:00', '14:50', 5, 0);
 insert into lecture values('2222','데이터마이닝','soft', 'softji', '화', '14:00', '15:50', 5, 0);
-insert into lecture values('3333','신호처리','soft', 'comlim', '수', '9:00', '10:50', 5, 0);		
+insert into lecture values('3333','신호처리','soft', 'comlim', '수', '09:00', '10:50', 5, 0);		
 insert into lecture values('4444','컴퓨터그래픽스','soft', 'comkim', '수', '10:00', '10:50', 5, 0);	
-insert into lecture values('5555','컴퓨터구조','com', 'comkei', '월', '9:00', '10:50', 5, 4);	
+insert into lecture values('5555','컴퓨터구조','com', 'comkei', '월', '09:00', '10:50', 5, 4);	
 insert into lecture values('6666','c프로그래밍','com', 'busiksy', '화', '14:00', '15:50', 5, 3);	
-insert into lecture values('7777','java프로그래밍','com', 'busilhw', '수', '9:00', '10:50', 5,5);	
+insert into lecture values('7777','java프로그래밍','com', 'busilhw', '수', '09:00', '10:50', 5,5);	
 insert into lecture values('8888','웹프로그래밍','com', 'busijkj', '목', '15:00', '16:50', 5, 1);	
-insert into lecture values('9999','경영정보','busi', 'busikji', '월', '9:00', '10:50', 5, 2);	
+insert into lecture values('9999','경영정보','busi', 'busikji', '월', '09:00', '10:50', 5, 2);	
 insert into lecture values('0000','경영전략','busi', 'busilmk', '화', '14:00', '15:50', 5,4);	
 insert into lecture values('1122','생산관리','busi', 'busijjw', '수', '13:00', '14:50', 5, 5);	
 
