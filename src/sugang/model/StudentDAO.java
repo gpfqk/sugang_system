@@ -24,7 +24,8 @@ public class StudentDAO {
 			pstmt.setString(2, logInfo[1]);
 			rset = pstmt.executeQuery();
 			if (rset.next()) {
-				sessionInfo = new StudentDTO(rset.getString(1), rset.getString(2), rset.getString(3), rset.getString(4));
+				sessionInfo = new StudentDTO(rset.getString(1), rset.getString(2), rset.getString(3),
+						rset.getString(4));
 			}
 		} finally {
 			DBUtil.close(con, pstmt, rset);

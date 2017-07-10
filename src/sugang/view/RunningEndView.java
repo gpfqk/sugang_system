@@ -3,6 +3,7 @@ package sugang.view;
 import java.util.ArrayList;
 
 import sugang.model.dto.LectureDTO;
+import sugang.model.dto.RegistrationDTO;
 import sugang.model.dto.StudentDTO;
 
 public class RunningEndView {
@@ -14,7 +15,7 @@ public class RunningEndView {
 	}
 
 	// 모든 강의 출력
-	public static void registrationListView(ArrayList allRegistrationlist) {
+	public static void registrationListView(ArrayList<RegistrationDTO> allRegistrationlist) {
 		for (int index = 0; index < allRegistrationlist.size(); index++) {
 			System.out.println(allRegistrationlist.get(index));
 		}

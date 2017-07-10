@@ -8,11 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import sugang.model.dto.LectureDTO;
 import sugang.model.dto.RegistrationDTO;
 import sugang.model.util.DBUtil;
 import sugang.service.SugangMenuController;
-import sugang.view.RunningEndView;
 
 public class RegistrationDAO {
 	static Properties sql = DBUtil.getProperties();
@@ -56,7 +54,7 @@ public class RegistrationDAO {
 		}
 		return false;
 	}
-	
+
 	public static boolean addRegistration(String lecCode) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -78,7 +76,7 @@ public class RegistrationDAO {
 		}
 		return false;
 	}
-	
+
 	public static boolean addNewDayRegistration(String lecCode) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -116,7 +114,7 @@ public class RegistrationDAO {
 		}
 		return false;
 	}
-	
+
 	public static boolean verifyExist(String lecCode) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -136,13 +134,13 @@ public class RegistrationDAO {
 		}
 		return false;
 	}
-	
+
 	public static boolean verifyNewDay(String lecCode) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String stuCode = SugangMenuController.session.getCode();
-		
+
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(sql.getProperty("verifyNewDay"));
@@ -157,7 +155,7 @@ public class RegistrationDAO {
 		}
 		return false;
 	}
-	
+
 	public static boolean deleteRegistration(String lecCode) throws SQLException {
 		Connection con = null;
 		Statement stmt = null;

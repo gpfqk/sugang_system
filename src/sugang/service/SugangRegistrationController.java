@@ -91,8 +91,7 @@ public class SugangRegistrationController {
 		return isData;
 	};
 
-	public static boolean addRegistration(String lecCode) {
-		boolean isData = false;
+	public static void addRegistration(String lecCode) {
 		try {
 			if (RegistrationDAO.verifyExist(lecCode)) {
 				if (RegistrationDAO.verifyCount(lecCode)) {
@@ -100,7 +99,6 @@ public class SugangRegistrationController {
 						if (RegistrationDAO.addNewDayRegistration(lecCode)) {
 							if (RegistrationDAO.updateCurrentCount(lecCode)) {
 								RunningEndView.showSuccess("수강신청 성공!");
-								isData = true;
 							}
 						} else {
 							RunningEndView.showError("기존에 신청한 과목과 시간이 중복되어 신청할 수 없습니다.");
@@ -109,7 +107,6 @@ public class SugangRegistrationController {
 						if (RegistrationDAO.addRegistration(lecCode)) {
 							if (RegistrationDAO.updateCurrentCount(lecCode)) {
 								RunningEndView.showSuccess("수강신청 성공!");
-								isData = true;
 							}
 						} else {
 							RunningEndView.showError("기존에 신청한 과목과 시간이 중복되어 신청할 수 없습니다.");
@@ -125,15 +122,12 @@ public class SugangRegistrationController {
 			s.printStackTrace();
 			RunningEndView.showError("수강신청 SQL에러 발생");
 		}
-		return isData;
 	};
 
-	public static boolean deleteRegistration(String lecCode) {
-		boolean isData = false;
+	public static void deleteRegistration(String lecCode) {
 		try {
 			if (RegistrationDAO.deleteRegistration(lecCode)) {
 				RunningEndView.showSuccess("수강취소 성공");
-				isData = true;
 			} else {
 				RunningEndView.showError("해당 코드의 강의내역이 없습니다");
 			}
@@ -141,6 +135,5 @@ public class SugangRegistrationController {
 			s.printStackTrace();
 			RunningEndView.showError("수강신청 에러 발생");
 		}
-		return isData;
 	};
 }
